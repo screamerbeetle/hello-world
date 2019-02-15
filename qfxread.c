@@ -8,6 +8,7 @@
  *
  * I prefer to compile this with:
  * " musl-gcc -static -O3 -o ledger-import qfxread.c "
+ *
  */
 #include <stdio.h>
 #include <string.h>
@@ -25,7 +26,7 @@ char bank[N];
 char account[N];
 char datePosted[N];
 char fid[N];
-char amount[N];
+float  amount ;
 char fitid[N];
 char memo[N];
 char * block;
@@ -85,8 +86,7 @@ while ( fgets(str, N, fp) != NULL ) {
 		datePosted[10] = '\0';
 	}
 	if (!strcmp(block,"TRNAMT")) { //amount
-		sscanf(data,LongScan,amount);
-		// Could make this a float and then add the second line with the account.
+		sscanf(data,"%f",&amount);
 	}
 	if (!strcmp(block,"FITID")) { //fitid uniq?
 		sscanf(data,LongScan,fitid);
@@ -102,9 +102,9 @@ while ( fgets(str, N, fp) != NULL ) {
 	}
 	if (!strcmp(block,"/STMTTRN")) { //print out the block for ledger
 		printf("%s \"%s\"\n",datePosted,memo);
-		printf("    %s:%s    \t\t$%s\n", bank, account, amount);
+		printf("    %s:%s        \t\t\t$%1.2f\n", bank, account, amount);
 		printf("    ; ofxid: %s.%s.%s\n",fid,account,fitid);
-		printf("    Expenses:Unknown    \t\t\n\n");
+		printf("    Expenses:Unknown    \t\t\t$%1.2f\n\n",-amount);
 	}
 
 	}
