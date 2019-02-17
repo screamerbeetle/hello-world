@@ -62,14 +62,14 @@ while ( fgets(str, N, fp) != NULL ) {
 	 */
 
 	if (!strcmp(block,"ORG")) { //bank
-		sscanf(data,LongScan,bank);
+		sscanf(data,LongScan,&bank);
 	}
 	if (!strcmp(block,"FID")) { //bank id for ofxid
 		// ofxid is FID.ACCTID.FITID
-		sscanf(data,LongScan,fid);
+		sscanf(data,LongScan,&fid);
 	}
 	if (!strcmp(block,"ACCTID")) { //account
-		sscanf(data,LongScan,account);
+		sscanf(data,LongScan,&account);
 	}
 	if (!strcmp(block,"DTPOSTED")) { //datePosted
 		// do it with pointers...
@@ -89,7 +89,7 @@ while ( fgets(str, N, fp) != NULL ) {
 		sscanf(data,"%f",&amount);
 	}
 	if (!strcmp(block,"FITID")) { //fitid uniq?
-		sscanf(data,LongScan,fitid);
+		sscanf(data,LongScan,&fitid);
 	}
 	if (!strcmp(block,"MEMO")) { //memo
 		strcpy(memo,data);
