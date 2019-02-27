@@ -7,7 +7,7 @@
  * It's not smart, but it's fast!
  *
  * I prefer to compile this with:
- * " musl-gcc -static -O3 -o ledger-import qfxread.c "
+ * " musl-gcc -static -O3 -o qfxread qfxread.c "
  *
  */
 #include <stdio.h>
@@ -88,7 +88,7 @@ while ( fgets(str, N, fp) != NULL ) {
 	if (!strcmp(block,"TRNAMT")) { //amount
 		sscanf(data,"%f",&amount);
 	}
-	if (!strcmp(block,"FITID")) { //fitid uniq?
+	if (!strcmp(block,"FITID")) { //fitid 
 		sscanf(data,LongScan,&fitid);
 	}
 	if (!strcmp(block,"MEMO")) { //memo
@@ -102,16 +102,16 @@ while ( fgets(str, N, fp) != NULL ) {
 	}
 	if (!strcmp(block,"/STMTTRN")) { //print out the block for ledger
 		printf("%s \"%s\"\n",datePosted,memo);
-		printf("    %s:%s        \t\t\t$%1.2f\n", bank, account, amount);
+		printf("    %s:%s                                                  \t$%1.2f\n", bank, account, amount);
 		printf("    ; ofxid: %s.%s.%s\n",fid,account,fitid);
-		printf("    Expenses:Unknown    \t\t\t$%1.2f\n\n",-amount);
+		printf("    Expenses:Unknown                                                \t$%1.2f\n\n",-amount);
 	}
 
-	}
+	} // End tested block <BLAH>BLAH
 
 
-}
+} // End while();
 fclose(fp);
 
 return(0);
-}
+} // End main();
