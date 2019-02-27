@@ -8,12 +8,13 @@ It is *very* simple, and *very* fast.
 I use sort and grep to find duplicates in post processing like this:
 
 ```bash
-outputFile='$HOME/your.file.journal'
+outputFile="$HOME/your.file.journal"
 dupFile='/tmp/duplicates.txt'
 grep ofxid "$outputFile" | sort | uniq -d > $dupFile
 if [ -s $dupFile ] 
+then
  echo "Duplicate entries at the following lines (ofxid)" 
- grep -C 3 -nZ "$(cat $dupFile )" $outputFile
+ grep -C 3 -nZ "$(cat $dupFile )" "$outputFile"
 fi
 ```
 
